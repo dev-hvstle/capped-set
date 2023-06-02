@@ -73,9 +73,12 @@ describe("Capped Set", function () {
     });
     it("Should return lowest value after updating a pair", async () => {
       const { cappedSet } = await loadFixture(deployCappedSetFixture);
-      const pair = await cappedSet.callStatic.update(testData[0].address, 1);
 
-      expect(Number(pair[1])).to.equal(1);
+      const pair = await cappedSet.callStatic.update(testData[0].address, 99);
+      expect(Number(pair[1])).to.equal(10);
+
+      const pair2 = await cappedSet.callStatic.update(testData[0].address, 1);
+      expect(Number(pair2[1])).to.equal(1);
     });
   });
 

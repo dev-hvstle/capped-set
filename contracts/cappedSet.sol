@@ -20,6 +20,7 @@ contract CappedSet {
     * @dev Insert a new element into the set 
     * @param _addr Address of the element to insert
     * @param _value Value of the element to insert
+    * @return The lowest value element in the set
     */
    function insert(address _addr, uint256 _value) external returns(Pair memory){
       if(element.length == 0)  {
@@ -39,12 +40,13 @@ contract CappedSet {
     * @dev Update an existing element in the set
     * @param _addr Address of the element to update
     * @param _newValue New value to update the element with
+    * @return The updated element
     */
    function update(address _addr, uint256 _newValue) external returns(Pair memory) {
       for(uint256 index = 0; index < element.length;) {
          if(element[index].addr == _addr) {
             element[index].value = _newValue;
-            return element[index];
+            return getLowestValueElement();
          }
 
          unchecked {
