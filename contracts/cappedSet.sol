@@ -40,7 +40,7 @@ contract CappedSet {
     * @dev Update an existing element in the set
     * @param _addr Address of the element to update
     * @param _newValue New value to update the element with
-    * @return The updated element
+    * @return The lowest value element
     */
    function update(address _addr, uint256 _newValue) external returns(Pair memory) {
       for(uint256 index = 0; index < element.length;) {
@@ -101,6 +101,7 @@ contract CappedSet {
    /**
     * @dev Get the value of an element in the set
     * @param _addr Address of the element to get the value of
+    * @return The value of the element
     */
    function getValue(address _addr) public view returns(uint256) {
       for(uint256 index = 0; index < element.length;) {
