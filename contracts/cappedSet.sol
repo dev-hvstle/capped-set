@@ -46,8 +46,15 @@ contract CappedSet {
    }
 
    function remove(address _addr) public returns(Pair memory) {
+      require(element.length > 0, "No elements in the set");
+
       uint256 addrIndex;
       bool found = false;
+
+      if(element.length == 1) { 
+         element.pop();
+         return Pair(address(0), 0);
+      }
 
       for(uint256 index = 0; index < element.length;) {
          if(element[index].addr == _addr) {

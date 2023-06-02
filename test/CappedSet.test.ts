@@ -103,6 +103,26 @@ describe("Capped Set", function () {
       );
       expect(Number(pair[1])).to.equal(10);
     });
+    it("Should remove all pairs", async () => {
+      const { cappedSet } = await loadFixture(deployCappedSetFixture);
+
+      for (let index = 0; index < 4; index++) {
+        await cappedSet.remove(testData[index].address);
+      }
+
+      expect(await cappedSet.getElementLength()).to.equal(0);
+    });
+    it("Should revert when trying to remove a pair if element length is 0", async () => {
+      const { cappedSet } = await loadFixture(deployCappedSetFixture);
+
+      for (let index = 0; index < 4; index++) {
+        await cappedSet.remove(testData[index].address);
+      }
+
+      await expect(cappedSet.remove(testData[0].address)).to.be.revertedWith(
+        "No elements in the set"
+      );
+    });
   });
 
   describe("Get Value", () => {
