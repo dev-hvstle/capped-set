@@ -16,6 +16,11 @@ contract CappedSet {
 
    // Main Functions
 
+   /**
+    * @dev Insert a new element into the set 
+    * @param _addr Address of the element to insert
+    * @param _value Value of the element to insert
+    */
    function insert(address _addr, uint256 _value) external returns(Pair memory){
       if(element.length == 0)  {
          element.push(Pair(_addr, _value));
@@ -30,6 +35,11 @@ contract CappedSet {
       return getLowestValueElement();
    }
 
+   /**
+    * @dev Update an existing element in the set
+    * @param _addr Address of the element to update
+    * @param _newValue New value to update the element with
+    */
    function update(address _addr, uint256 _newValue) external returns(Pair memory) {
       for(uint256 index = 0; index < element.length;) {
          if(element[index].addr == _addr) {
@@ -45,6 +55,11 @@ contract CappedSet {
       revert("Address not found");
    }
 
+   /**
+    * @dev Remove an element from the set
+    * @param _addr Address of the element to remove
+    * @return The lowest value element in the set
+    */
    function remove(address _addr) public returns(Pair memory) {
       require(element.length > 0, "No elements in the set");
 
@@ -80,6 +95,11 @@ contract CappedSet {
       return getLowestValueElement();
    }
 
+
+   /**
+    * @dev Get the value of an element in the set
+    * @param _addr Address of the element to get the value of
+    */
    function getValue(address _addr) public view returns(uint256) {
       for(uint256 index = 0; index < element.length;) {
          if(element[index].addr == _addr) {
@@ -96,6 +116,9 @@ contract CappedSet {
 
    // Utility Functions
 
+   /**
+    * @return The lowest value element in the set
+    */
    function getLowestValueElement() public view returns(Pair memory) {
       uint256 lowestValueIndex = 0;
       uint256 lowestValue = element[0].value;
@@ -114,10 +137,16 @@ contract CappedSet {
       return element[lowestValueIndex];
    }
 
+   /**
+    * @return The highest value element in the set
+    */
    function getElementLength() external view returns(uint256) {
       return element.length;
    }
 
+   /**
+    * @return All elements in the set
+    */
    function getElements() external view returns(Pair[] memory) {
       return element;
    }
